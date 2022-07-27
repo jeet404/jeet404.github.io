@@ -18,9 +18,7 @@ a {
 
 .brand-name,
 .navbar-light .navbar-brand {
-  /* font-family: "Brush Script MT"; */
-  /* margin-bottom: 3px; */
-  font-family: "Lovely Home";
+  font-family: monospace;
   font-size: 50px;
   font-weight: bold;
   color: #351458;
@@ -29,7 +27,7 @@ a {
 @media only screen and (max-width: 764px) {
   .brand-name,
   .navbar-light .navbar-brand {
-    font-family: "Lovely Home";
+    font-family: monospace;
     font-size: 40px;
     font-weight: bold;
     color: #351458;
