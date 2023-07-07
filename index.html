@@ -23,6 +23,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+  <script src="assets/js/sendMsg.js"></script>
+
 </head>
 
 <body>
@@ -512,14 +516,14 @@
           <form action="#" class="form" data-form>
 
             <div class="input-wrapper">
-              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
+              <input type="text" id="fullname" class="form-input" placeholder="Full name" required data-form-input>
 
-              <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
+              <input type="email" id="email" class="form-input" placeholder="Email address" required data-form-input>
             </div>
 
-            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
+            <textarea id="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
 
-            <!-- <a href="mailto:jeet63240 -->
+            <button class="form-btn" onclick="saveSubscribe()" data-form-btn>Send Message</button>
           </form>
 
         </section>
@@ -529,11 +533,48 @@
     </div>
 
   </main>
- 
+  <script>
+    function saveSubscribe() {
+      var email = $("#email").val();
+      var validateEmail = function (email) {
+        var re = /\S+@\S+\.\S+/;
+        return re.test(email);
+      };
+      var fullname = $("#fullname").val();
+      if (fullname == "") {
+        alert("Enter your name");
+      }
+      var message = $("#message").val();
+      if (!validateEmail(email)) {
+        alert("Enter valid email");
+      } else {
+        var timestamp = new Date().valueOf();
+        var obj = {};
+        obj[timestamp] = {
+          "email": email,
+          "fullname": fullname,
+          "message": message,
+        }
+        firebase
+          .database()
+          .ref("/")
+          .update(obj, function (error) {
+            if (error) {
+              alert("Invalid email");
+            } else {
+              alert("Thank you for Contacting me.");
+              $("#email").val("");
+              $("#fullname").val("");
+              $("#message").val("");
+            }
+          });
+      }
+    }
+  </script>
   <script src="/assets/js/script.js"></script>
 
-              <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-              <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </body>
 
